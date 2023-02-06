@@ -9,6 +9,3 @@ This website is the home of the ClearGauntlets project, a fork of the LucidVR pr
 Please bear with us as we build all this, it's really complicated.
 
 This website also hopes to become a resource for anyone looking to get into VR hacking, a starting place for learning the basic components of a VR system, a host for detailed descriptions, source code, schematics, and guides. Ideally, you will be able to go from zero to full pair of custom gloves just by clicking through this website.
-
-Welcome. I really hope this will work.
-

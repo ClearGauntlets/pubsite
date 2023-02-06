@@ -3,5 +3,6 @@ site_url: https://cleargauntlets.github.io
 nav:
   - Home: index.md
   - Projects: projects.md
+  - Parts List: parts_list.md
 theme:
   name: materia
