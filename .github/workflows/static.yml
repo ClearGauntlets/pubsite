@@ -33,7 +33,7 @@ jobs:
         # Or use mhausenblas/mkdocs-deploy-gh-pages@nomaterial to build without the mkdocs-material theme
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_DOMAIN: cleargauntlets.github.io
+          # CUSTOM_DOMAIN: cleargauntlets.github.io
           CONFIG_FILE: cleargauntlets/mkdocs.yml
           EXTRA_PACKAGES: build-base
           # GITHUB_DOMAIN: github.myenterprise.com
