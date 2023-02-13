@@ -4,5 +4,6 @@ nav:
   - Home: index.md
   - Projects: projects.md
   - Parts List: parts_list.md
+  - Photos: photos.md
 theme:
   name: materia
