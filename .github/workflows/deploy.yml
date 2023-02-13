@@ -40,6 +40,7 @@ jobs:
           REQUIREMENTS: requirements.txt
 
   deploy:
+    needs: build
     environment:
       name: Deploy to github-pages
       url: ${{ steps.deployment.outputs.page_url }}
