@@ -5,7 +5,7 @@ The official website for the ClearGauntlets project
 Here, you can find information about our project, and resources about VR Hacking.
 
 
-[cleargauntlets.github.io](cleargauntlets.github.io)
+https://cleargauntlets.github.io/
 
 ## Developing
 
