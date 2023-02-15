@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://cleargauntlets.github.io/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cleargauntlets.github.io/joystick-PCB/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cleargauntlets.github.io/mainPCB-revB/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cleargauntlets.github.io/parts_list/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cleargauntlets.github.io/photos/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cleargauntlets.github.io/projects/</loc>
+         <lastmod>2023-02-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
