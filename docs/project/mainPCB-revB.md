@@ -32,8 +32,18 @@ It's all just through-hole soldering, so it goes pretty quick once you have the 
 
 You will also probably want to create a 2-pin 5V USB cable like this one:
 
-![IMG_1019](https://user-images.githubusercontent.com/42927786/213874292-f878529d-52b0-481f-8072-50417f089595.jpg)
+![power-cable](https://user-images.githubusercontent.com/44926107/219140334-1313ffe1-9952-468f-b126-c47d99506ea7.jpg)
 
 It's just power, and ground, and goes into the 5V/GND JST connector next to the ESP32.
 
 **You'll also need to bodge that 5V in pin to the Vin pin that goes to the ESP32**
+
+## Demo Picture
+
+### Plain PCB
+![before-assembly](https://user-images.githubusercontent.com/44926107/219139429-9c722e32-f4aa-44ac-842e-0a0b4b3b6cd3.png)
+
+### Assembled PCB
+![assembled-pcb](https://user-images.githubusercontent.com/44926107/219139395-f2374558-d047-49e4-a27d-7153ef7459ca.jpg)
+
+
