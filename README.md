@@ -8,7 +8,7 @@ https://cleargauntlets.github.io/
 
 ## Developing
 
-We use [MkDocs](https://www.mkdocs.org/) for site generation.
+We use [MkDocs](https://www.mkdocs.org/) for site generation. You will need Python, pip, and venv installed.
 
 1. Clone this repo
 2. Create a virtual environment: `python3 -m venv ./venv`
