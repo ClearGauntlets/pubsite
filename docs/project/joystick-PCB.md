@@ -1,7 +1,7 @@
 # ClearGauntlet - Joystick PCB
 Joystick PCB - Schematics Design for interfacing between Joycon's joystick and main PCB.
 
-**Motivation**: We are using a thirdd party joystick such as [here](https://www.amazon.com/BRHE-Switch-Joystick-Replacement-Controller/dp/B097QPKRR8/ref=sr_1_5?crid=2JRAXLZX0SBR4&keywords=joycon%2Bjoystick%2Breplacement&qid=1675712249&s=electronics&sprefix=Joycon%2Brep%2Celectronics%2C78&sr=1-5&th=1). Since the flex cable is very short and flimsy, we want to create a small PCB board to hold, and connect pins to the main PCB more reliably. 
+**Motivation**: We are using a third party joystick such as [here](https://www.amazon.com/BRHE-Switch-Joystick-Replacement-Controller/dp/B097QPKRR8/ref=sr_1_5?crid=2JRAXLZX0SBR4&keywords=joycon%2Bjoystick%2Breplacement&qid=1675712249&s=electronics&sprefix=Joycon%2Brep%2Celectronics%2C78&sr=1-5&th=1). Since the flex cable is very short and flimsy, we want to create a small PCB board to hold, and connect pins to the main PCB more reliably. 
 
 ## Components
 ### Joystick
