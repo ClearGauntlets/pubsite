@@ -2,7 +2,10 @@ site_name: ClearGauntlets
 site_url: https://cleargauntlets.github.io
 nav:
   - Home: index.md
+  - Blogs:
+    - blogs/willard.md
   - Projects:
+    - Overview: project/overview.md
     - Main PCB: project/mainPCB-revB.md
     - Joystick: project/joystick-PCB.md
   - Parts List: parts_list.md
