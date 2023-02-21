@@ -3,7 +3,8 @@ site_url: https://cleargauntlets.github.io
 nav:
   - Home: index.md
   - Blogs:
-    - blogs/willard.md
+    - Willard:
+      - blogs/willard/2023-02-21.md
   - Projects:
     - Overview: project/overview.md
     - Main PCB: project/mainPCB-revB.md
