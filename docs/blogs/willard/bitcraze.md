@@ -1,4 +1,5 @@
-# Creating a More Accessible Tracker Using the Bitcraze Lighthouse Positioning Deck
+# More Accessible Tracker
+## Creating a More Accessible Tracker Using the Bitcraze Lighthouse Positioning Deck
 ### 2023-02-24
 
 ## Introduction
