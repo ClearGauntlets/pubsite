@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Blogs:
     - Willard:
+      - blogs/willard/bitcraze.md
       - blogs/willard/2023-02-21.md
   - Projects:
     - Overview: project/overview.md
@@ -11,6 +12,8 @@ nav:
     - Joystick: project/joystick-PCB.md
   - Parts List: parts_list.md
   - Photos: photos.md
+extra_css:
+  - css/extra.css
 
 theme:
   name: materia
