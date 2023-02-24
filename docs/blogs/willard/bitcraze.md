@@ -54,14 +54,10 @@ In summary, I want to take Bitcraze's design and source code and turn it into a 
 - The FPGA only appears to have enough I/O for 12 TS4231's (the chip connected to the photodiode that gets pulses from the Lighthouse)
 - Everything is REALLY SMALL. Seriously I ordered this board and have it in hand and MY GOD IT IS SO SMALL
 - Chip shortage could completely ruin my life. I've checked DigiKey and Mouser, and they seem to have stuff in stock, but I haven't actually bought anything yet because I am a coward.
-- Valve might get   **a n g e r y**   at me. (please hire me your technology is so cool)
 - Bitcraze's FPGA code is written in Scala
     - I don't know Scala
-        - I don't _want_ to know Scala
-- I haven't a scooby how I'm actually going to get data off the board yet
-    - This is actually twofold. Firstly, something-something Serial over 3.3V something-something.
-    - Secondly, the LPD (Lighthouse Positioning Deck) does not have any kind of CPU onboard, only the FPGA.
-        - So I need a microcontroller and that'll probably be a Lot Of Coding And Algorithms.
-- I am a Bozo and a Fool and Not Very Good At Computers.
+- I haven't a clue how I'm actually going to get data off the board yet
+    - Because the FPGA runs at a non-standard voltage, I'll probably need to order some kind of special cable to connect it to my PC.
+    - Secondly, the Lighthouse Positioning Deck does not have any kind of CPU onboard, only the FPGA, so I need a microcontroller and that'll probably be a lot of work.
 
 But other than that, this seems pretty easy. I've got the board here on my desk, and I'm looking at it right now... and I just realized that I'm writing this blog post to delay working on solving all of the above problems. So... guess I'm gonna go do that.
