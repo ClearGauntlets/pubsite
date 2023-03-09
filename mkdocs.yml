@@ -4,7 +4,7 @@ nav:
   - Home: index.md
   - Blogs:
     - Willard:
-      - blogs/willard/bitcraze.md
+      - blogs/willard/mat.md
       - blogs/willard/2023-02-21.md
   - Projects:
     - Overview: project/overview.md

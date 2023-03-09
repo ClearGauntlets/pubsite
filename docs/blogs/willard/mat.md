@@ -1,18 +1,158 @@
 # More Accessible Tracker
+
+In which a bozo attempts to do SteamVR tracking for cheap.
+
+## Compiling the lighthouse-fpga project
+### 2023-03-07
+
+Hello again. I feel that this page is overdue for an update, so here's one: I've managed to compile the FPGA implementation! 
+
+Specifically, [the bitcraze lighthouse-fpga repository](https://github.com/bitcraze/lighthouse-fpga/). It contains HLS code written in Scala along with a smattering of Verilog required to create a bitstream that can be loaded onto the Lattice ice40up5k FPGA. I'll leave the details about their implementation as an exercise to the reader (the README for that project is pretty in-depth).
+
+The part I was interested in was [here](https://github.com/bitcraze/lighthouse-fpga#building-and-programming). Before I went any further, I wanted to see if I could figure out the toolchain for this board to be sure that I knew how to make changes. Their instructions entail downloading, building, and installing a couple tools, so I followed this guide on a spare laptop I had to ensure that I wouldn't accidentally destroy my school laptop. But, when I typed `make`...
+
+```BASH
+ERROR: Unable to find legal placement for all cells, design is probably at utilisation limit.
+```
+
+Hm, well, there's instructions for generating a new timing seed in case you get timing errors, but no, this isn't a timing error. I believe this error was related to the design being too big to fit on the hardware. Describing an FPGA is out of scope for this blog (google it), but TL;DR, it's basically a chip with a whole bunch of LUTs that you can configure to act like any kind of logic circuit, as long as that circuit can translate to—and fit on—that array of LUTs. Around this point, I opened an [issue](https://github.com/bitcraze/lighthouse-fpga/issues/15) to track my progress, and also to hopefully get someone's attention that their documentation doesn't Just Work.
+
+The first thing I tried was reverting back to the [most recent tag](https://github.com/bitcraze/lighthouse-fpga/releases/tag/V6). Maybe something was off about the design in the master branch, even though the CI was working, but surely this one would work?
+
+```BASH
+    ...
+Info: Annotating ports with timing budgets for target frequency 24.00 MHz
+Info: Checksum: 0x7d970e13
+
+Info: Device utilisation:
+Info: 	         ICESTORM_LC:  4959/ 5280    93%
+Info: 	        ICESTORM_RAM:    18/   30    60%
+Info: 	               SB_IO:    14/   96    14%
+Info: 	               SB_GB:     8/    8   100%
+Info: 	        ICESTORM_PLL:     1/    1   100%
+Info: 	         SB_WARMBOOT:     1/    1   100%
+Info: 	        ICESTORM_DSP:     0/    8     0%
+Info: 	      ICESTORM_HFOSC:     0/    1     0%
+Info: 	      ICESTORM_LFOSC:     0/    1     0%
+Info: 	              SB_I2C:     0/    2     0%
+Info: 	              SB_SPI:     0/    2     0%
+Info: 	              IO_I3C:     0/    2     0%
+Info: 	         SB_LEDDA_IP:     0/    1     0%
+Info: 	         SB_RGBA_DRV:     0/    1     0%
+Info: 	      ICESTORM_SPRAM:     0/    4     0%
+
+Info: Placed 17 cells based on constraints.
+Info: Creating initial analytic placement for 4544 cells, random placement wirelen = 119963.
+Info:     at initial placer iter 0, wirelen = 1157
+Info:     at initial placer iter 1, wirelen = 1036
+Info:     at initial placer iter 2, wirelen = 1001
+Info:     at initial placer iter 3, wirelen = 1096
+Info: Running main analytical placer, max placement attempts per cell = 3126250.
+Info:     at iteration #1, type ALL: wirelen solved = 1011, spread = 33666, legal = 54569; time = 4.92s
+Info:     at iteration #2, type ALL: wirelen solved = 1872, spread = 25194, legal = 60314; time = 21.05s
+Info:     at iteration #3, type ALL: wirelen solved = 3028, spread = 21014, legal = 57499; time = 9.17s
+ERROR: Unable to find legal placement for all cells, design is probably at utilisation limit.
+10 warnings, 1 error
+make: *** [Makefile:20: lighthouse.asc] Error 255
+```
+
+**OK, why didn't that work?** What's the [CI](https://github.com/bitcraze/lighthouse-fpga/actions/runs/3731419921/jobs/6329629141) doing that I'm not?
+
+```BASH
+Run docker run --rm -v ${PWD}:/module bitcraze/fpga-builder ./tools/build/build
+Unable to find image 'bitcraze/fpga-builder:latest' locally
+latest: Pulling from bitcraze/fpga-builder
+```
+
+Oh, there's a docker container. That wasn't mentioned in the README.
+
+_I would actually later find out that there's a utility they have called [toolbelt](https://github.com/bitcraze/toolbelt) that I probably should have been using to build this._
+
+So, I pulled the docker container, and set up a copy of the repo I could pass in as a volume (since I wanted to keep the build artifacts). I also switched to Freedom, Computer Science House's gigantic 48-core compute server, in case I could speed up compilation more.
+
+```BASH
+podman run --rm -it \ 
+    -v /scratch/wilnil/lighthouse-fpga/:/module/workdir:Z \
+    --name bitcraze docker.io/bitcraze/fpga-builder
+```
+
+After that, I `cd`'ed into `/module/workdir`, ran `make`, and...
+
+```
+ERROR: Max frequency for clock          'Core_clk': 47.03 MHz (FAIL at 48.00 MHz)
+ERROR: Max frequency for clock 'Slow_clk_$glb_clk': 21.16 MHz (FAIL at 24.00 MHz)
+```
+
+OK! Progress! That's a timing error! This is expected :) So, now I have to run their `search_seed.py` just like the documentation says.
+
+Except, `search_seed.py` launched a Docker container. I don't have Docker, and I don't want Docker. However, I noticed that the V6 tag (I was still on master on Freedom) had an actual script, and not a Docker container. So I launched that on a single thread. The script, as far as I could tell, just tried to compile the design over and over again with a different seed, which, on a single core, would have taken *hours*. A quick tweak to the Python code, and I was doing 48 seeds at a time, which, on Freedom, took about 20 minutes to get through all 1000 seeds.
+
+After running through all 1000 seeds like 5 times, I had 3 seeds. None of them worked, though, and I don't really know why. Luckily, someone had [replied to my issue](https://github.com/bitcraze/lighthouse-fpga/issues/15#issuecomment-1455913534) and told me to try reducing a multiplier that had been set really high as a precaution. There's a function in the Scala HLS that is part of the pulse processing process (lol) that had that had a speed multiplier set to 4 to deal with a worst case scenario that would never actually happen.
+
+So, I set that multiplier to 1, and...
+
+```
+Info: Max frequency for clock          'Core_clk': 51.58 MHz (PASS at 48.00 MHz)
+Info: Max frequency for clock 'Slow_clk_$glb_clk': 24.97 MHz (PASS at 24.00 MHz)
+
+Info: Max delay <async>                   -> posedge Slow_clk_$glb_clk: 4.19 ns
+Info: Max delay posedge Core_clk          -> posedge Slow_clk_$glb_clk: 5.47 ns
+Info: Max delay posedge Slow_clk_$glb_clk -> <async>                  : 15.08 ns
+Info: Max delay posedge Slow_clk_$glb_clk -> posedge Core_clk         : 17.20 ns
+
+Info: Slack histogram:
+Info:  legend: * represents 30 endpoint(s)
+Info:          + represents [1,30) endpoint(s)
+Info: [  1447,   3297) |+
+Info: [  3297,   5147) |+
+Info: [  5147,   6997) |*+
+Info: [  6997,   8847) |*******************+
+Info: [  8847,  10697) |****+
+Info: [ 10697,  12547) |***********+
+Info: [ 12547,  14397) |*********+
+Info: [ 14397,  16247) |*********+
+Info: [ 16247,  18097) |*************+
+Info: [ 18097,  19947) |**+
+Info: [ 19947,  21797) |***+
+Info: [ 21797,  23647) |*+
+Info: [ 23647,  25497) |*+
+Info: [ 25497,  27347) |*******+
+Info: [ 27347,  29197) |********+
+Info: [ 29197,  31047) |**********+
+Info: [ 31047,  32897) |**********+
+Info: [ 32897,  34747) |*****************+
+Info: [ 34747,  36597) |*********************************************************+
+Info: [ 36597,  38447) |************************************************************
+10 warnings, 0 errors
+
+Info: Program finished normally.
+python3 tools/update_bitstream_comment.py lighthouse.asc "6"
+icepack lighthouse.asc lighthouse.bin
+```
+
+It passed!
+
+It doesn't compile all the time, though, and I'm not really sure why. So, I'll have to read up some more on their toolchains and whatnot, and probably install Docker and do things _properly_.
+
+But, the next step in the More Accessible Tracker journey is talking to the board! So, stay tuned for that. I'll need to rig up a voltage divider, a serial connection, and solder to this $120 board :E
+
+
+
+
 ## Creating a More Accessible Tracker Using the Bitcraze Lighthouse Positioning Deck
 ### 2023-02-24
 
-## Introduction
+### Introduction
 When I began working on ClearGauntlets last year, it quickly became apparent that tracking was gonna be a bear of a project. For some reason, I figured that it was a solved problem. Somebody _must_ have created a simple, easy-to-build device on the cheap to talk to Valve's cool lighthouses. And I was _very_ wrong. This post will explain what I wanted to do, how wrong I was about how easy it would be to do so, and what my plan is going forward.
 
 **TL;DR: I've purchased a Bitcraze Lighthouse Positioning Deck and want to make my own Lighthouse 2.0 trackers because I am curious to see if I can.**
 
-## The Problem
+### The Problem
 VR tracking is, actually, an insanely complicated challenge. One that took AAA engineers decades to figure out and create a consumer product that didn't _quite_ cost $1000. During the later half of the 2010's, hackers gained some traction on reverse engineering Valve/HTC's Lighthouse tech. From those efforts came [libsurvive](https://github.com/cntools/libsurvive), an effort to fully unravel the stack, from the protocols that the lighthouses use to communicate with tracked devices, to the solving equations embedded in Valve's proprietary blobs. It's a truly incredible project that has been a huge inspiration to me on my short VR journey so far.
 
 However, these guys are focused on how to take Valve hardware and make it talk to their software. What I needed for the ClearGauntlets project was basically the opposite: Taking our hardware and getting it to talk to Valve software. ClearGauntlets is supposed to be a "More Premium™" Haptic Glove solution. Our target kit price is $200, all included. We're a fork of the LucidVR project, whose Prototype 4.1 glove is supposed to cost somewhere around $60. However, they don't include in that price things like the batteries and trackers. That project relies on you either finding a way to mount your controller to your hand, or dropping a few hundred on something like Vive Trackers. I didn't like that, so I wanted to find a way to incorporate tracking into our gloves.
 
-## Research
+### Research
 
 We didn't have a lot of options. Because I only had an original, 2016-vintage HTC Vive, knew very little about VR, and yet was somehow the resident expert on the team, I decided to target the SteamVR ecosystem. I figured that it would be easy enough, and we went about googling. In a few weeks, we had only found two "open source" solutions for DIY tracked devices: The [HiveTracker](https://hivetracker.github.io/), and the [Vive DIY Position Sensor](https://github.com/ashtuchkin/vive-diy-position-sensor). These looked like great options, until we realized that they were 7-ish years old. Not only that, but they only supported Lighthouse 1.0, and not the newer Lighthouse 2.0.
 
@@ -26,13 +166,13 @@ The whole time I was researching, I had been made aware through a friend of mine
 
 Another project worth mentioning is [Tundra Labs' SIP](https://tundra-labs.com/products/tl448k6d-vr-system-in-package-for-steamvr-tracking?variant=39421399859409), but that has also been out of stock for months. Their datasheets do offer some nice inspiration.
 
-## A Long Road Ahead
+### A Long Road Ahead
 
 I, however, am stupid. A fool, you might say. I hadn't yet realized that VR is actually _pretty expensive_. I wasn't ready to accept that my "all-included" gloves probably needed an extra $100 tacked on _at least_ for an off-the-shelf tracking solution. However, I also realized that in order to take all of Bitcraze's IP and turn it from a drone product _back_ into a SteamVR product would take a lot of time, effort, and money. So, I let the idea sit for a while.
 
 Until today. Today, my Bitcraze Lighthouse Positioning Deck arrived in the mail, all $120 of it. If you're on the `#tracking-solutions` channel on the LucidVR Discord, you'll probably have seen me raving about this project. I've decided that I need to take a step. I'm not really in this to _play VR games._ I'm in this because the tech is cool as hell. I've got this board, and I'm going to see if I can talk to it. Then, I'm going to see if I can program it. Then, I'm going to see if I can hack it. I'll be documenting my progress on this website. Probably on this page, so check back for regular updates.
 
-## The Plan
+### The Plan
 
 <img src="/media/bitcraze-in-hand.jpg" style="display: block; margin: 0 auto"/>
 
