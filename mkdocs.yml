@@ -4,8 +4,8 @@ nav:
   - Home: index.md
   - Parts List: parts_list.md
   - Guides:
-    - Power Module: power.md
-    - Wiring: wiring.md
+    - Power Module: guides/power.md
+    - Wiring: guides/wiring.md
   - Projects:
     - Overview: projects/overview.md
     - Main PCB: projects/mainPCB-revB.md
