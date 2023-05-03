@@ -5,6 +5,10 @@ ClearGauntlets is composed of a handful of projects designed to produce a premiu
 ## [PCB](https://github.com/ClearGauntlets/ClearGauntlet-PCB)
 A compact PCB designed to break out all the IO you'll need in an extremely tight package.
 
+## [Power](https://github.com/ClearGauntlets/Power)
+The power module used to drive the ESP32 and Servos (and, perhaps one day, a custom tracker)
+**This doesn't exist yet. Hopefully it will soon.**
+
 ## [Firmware](https://github.com/ClearGauntlets/lucidgloves/tree/main/firmware/lucidgloves-firmware)
 A fork of the [LucidGloves](https://github.com/LucidVR/lucidgloves) project that we base our firmware off of.
 

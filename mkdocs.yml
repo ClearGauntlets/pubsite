@@ -2,15 +2,19 @@ site_name: ClearGauntlets
 site_url: https://cleargauntlets.github.io
 nav:
   - Home: index.md
-  - Blogs:
-    - Willard:
-      - blogs/willard/mat.md
-      - blogs/willard/2023-02-21.md
-  - Projects:
-    - Overview: project/overview.md
-    - Main PCB: project/mainPCB-revB.md
-    - Joystick: project/joystick-PCB.md
   - Parts List: parts_list.md
+  - Guides:
+    - Power Module: power.md
+    - Wiring: wiring.md
+  - Projects:
+    - Overview: projects/overview.md
+    - Main PCB: projects/mainPCB-revB.md
+    - Joystick: projects/joystick-PCB.md
+  - Blogs:
+    - Mat:
+      - blogs/mat/mat.md
+    - Willard:
+      - blogs/willard/2023-02-21.md
   - Photos: photos.md
 extra_css:
   - css/extra.css
