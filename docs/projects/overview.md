@@ -2,6 +2,9 @@
 
 ClearGauntlets is composed of a handful of projects designed to produce a premium, DIY-friendly pair of haptic feedback gloves. The project is essentially a glorified fork of the LucidVR project, and tries to maintain as much upstream compatibility as possible, with any deviations well-documented.
 
+## [CG Proto 2](https://cad.onshape.com/documents/c8017346b70c8e3a1c702b01/v/0d6c6a28e6c30c029db12761/e/4ca1df952223ccb607a2af60?renderMode=0&uiState=64541595e88e363a59e62839)
+Our re-design of LucidGloves Proto 4. The above link contains a read-only Onshape workspace. If you just want the STLs, [click here](https://github.com/ClearGauntlets/STL/blob/v2.0/ClearGauntletsSTLs.zip)
+
 ## [PCB](https://github.com/ClearGauntlets/ClearGauntlet-PCB)
 A compact PCB designed to break out all the IO you'll need in an extremely tight package.
 
