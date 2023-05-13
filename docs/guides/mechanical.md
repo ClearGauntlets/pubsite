@@ -92,7 +92,7 @@ It should look like this.
 
 Use your pliers to push the spring down into place if needed.  We want it to be nice, neat, and all in line with itself, not coming up and down at different spots.
 
-![alt_text](images/mechanical/image20.jpg "image_tooltip")
+![alt_text](images/mechanical/image20.png "image_tooltip")
 
 
 Thread the string though the hole in the upper spool.
