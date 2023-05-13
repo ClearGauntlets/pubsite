@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Parts List: parts_list.md
   - Guides:
+    - Mechanical: guides/mechanical.md
     - Power Module: guides/power.md
     - Wiring: guides/wiring.md
   - Projects:
