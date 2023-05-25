@@ -2,6 +2,37 @@
 
 In which a bozo attempts to do SteamVR tracking for cheap.
 
+## Talking I²C, and a base for UART communication
+### 2023-05-25
+
+<p align="center">
+<img src="/blogs/mat/media/mat_hex_vomit.jpg" height="300">
+</p>
+
+It's been a minute.
+
+I was busy with school and the rest of this MSD project, but I'm finished with all that now, and have decided to spend the rest of the summer working on this project, so hopefully there will be at least a few updates in the next few months.
+
+...is what I _would_ have said on the 11th of May, if I hadn't had a bout of health issues over the last couple weeks. I'm back now, and working on the project again, and have some exciting updates:
+
+#### I²C
+
+The FPGA has two components: a bootloader, and firmware. This design makes the board "unbrickable," since you can always flash new firmware if you mess something up. Anyway, [this page](https://www.bitcraze.io/documentation/repository/lighthouse-bootloader/master/bootloader-protocol/) details how that bootloader protocol works. Initially, I was trying to talk to it over UART 1 on the solder pads exposed, but that proved to be an exercise in futility. Instead, I shoved some jumper cables into the crazyflie expansion ports present on the deck, and set up I²C on an ESP32. I didn't bother regulating the voltage, and simply talk to it at 3.3V. To check if it worked, I tested the "Version" command, then I sent it the requisite boot commands, and he booted right up! The LEDs went from "Red and Blue" to "EVERYTHING!" There appear to be UART commands you can send to change those LEDs, but that's not really required for operation, since this thing is mostly stateless, and just vomits pulse data at you, I guess.
+
+#### UART
+
+That's a nice little segue into the UART! Once the board is up, data spools in from UART0, once again located on those expansion pins. The protocol for that can be found documented in the [lighthouse-fpga README](https://github.com/bitcraze/lighthouse-fpga/blob/master/readme.md), and you can find code for that in the [Crazyflie firmware](https://github.com/bitcraze/crazyflie-firmware/blob/7b218d49b447e013acc1b377a9c0b6bd17812ef3/src/modules/src/lighthouse/lighthouse_core.c#L232).
+
+The thing about this system that didn't really occur to me until I got in touch with Bitcraze about this project is that everything important happens onboard the crazyflie. This means that a large part of what the Vive Trackers do hasn't been implemented, that is, use 2.4GHz RF to talk to the PC so that it can do all of the solving. This is good news and bad news: Good news, I won't have to port much of their STM32 code to the ESP32, I basically just have to get the data and shunt it somewhere. Bad news: I have implement the shunting. Luckily, this seems to be a solved problem. Products like the [Tundra Tracker SoC](https://cdn.shopify.com/s/files/1/0560/9455/6369/files/TL448K6D-VR_Datasheet_v1p1.pdf?v=1624541321) have a Nordic nRF52832 RF processor that deals with communication to the PC by way of their dongle, or perhaps a watchman dongle? (I don't know if this product would work with a Watchman dongle, but I imagine the tech is very similar). So, either I can do something fancy with the ESP32 (it has onboard 2.4GHz radios of some kind, maybe I can use those?), or I can bring in some Nordic chip to do that for me. Small issue: Cost. My digikey parts list is already up to $60 on its own, and that sucks! So, I'd like to figure out how to do all this with as little hardware as possible.
+
+But I'm getting ahead of myself. That's the next problem. Right now, I'm just trying to correctly interpret data from the deck (specifically, today, I'm learning about the sync pulses), and prepare it for... whatever's next (probably sending to the PC). After that, I'll probably need an IMU.
+
+I wrote this post as an update, since it's been so long. As I said, I wanted to send something out sooner, but I got sick. Hopefully in the next week or three, I'll have another update, and can begin working on the IMU and/or communication issues.
+
+#### Code, please?
+
+Sure! It's literally garbage right now, but you can find my repo [here](https://github.com/cleargauntlets/mat-hacking). All it does is boot up the board and vomit whatever it gets back on UART.
+
 ## Compiling the lighthouse-fpga project
 ### 2023-03-07
 
