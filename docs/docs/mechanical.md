@@ -1,4 +1,10 @@
-**Clear Gauntlets Mechanical Assembly Guide**
+# Mechanical
+
+We are a fork of LucidVR's Prototype 4. Hopefully, our assembly is more straightforward, thanks to our simplified spool design.
+
+Below is the documentaiton to assemble a single finger module. Follow it five times per hand.
+
+## Mechanical Assembly Guide
 
 This guide details the full process of assembling the mechanical system for ClearGauntlets.  This process will require all the 3D printed components, all the potentiometers, and the badge reels.
 

@@ -1,3 +1,4 @@
+
 # CG Proto 2 Power Guide
 
 ## Soldering the Batteries

@@ -2,15 +2,11 @@ site_name: ClearGauntlets
 site_url: https://cleargauntlets.github.io
 nav:
   - Home: index.md
-  - Parts List: parts_list.md
-  - Guides:
-    - Mechanical: guides/mechanical.md
-    - Power Module: guides/power.md
-    - Wiring: guides/wiring.md
-  - Projects:
-    - Overview: projects/overview.md
-    - Main PCB: projects/mainPCB-revB.md
-    - Joystick: projects/joystick-PCB.md
+  - Docs:
+    - Parts List: docs/parts_list.md
+    - Mechanical: docs/mechanical.md
+    - Electrical: docs/electrical.md
+    - Power: docs/power.md
   - Blogs:
     - More Accessible Tracker: blogs/mat/mat.md
     - Willard:
