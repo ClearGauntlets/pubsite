@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://cleargauntlets.github.io/blogs/mat/mat/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>More Accessible Tracker - ClearGauntlets</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link href="../../../css/extra.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">ClearGauntlets</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../docs/parts_list/" class="dropdown-item">Parts List</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/mechanical/" class="dropdown-item">Mechanical</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/electrical/" class="dropdown-item">Electrical</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/power/" class="dropdown-item">Power</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blogs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">More Accessible Tracker</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Willard</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../willard/2023-02-21/" class="dropdown-item">2023 02 21</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../photos/" class="nav-link">Photos</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../../docs/power/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../willard/2023-02-21/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#more-accessible-tracker" class="nav-link">More Accessible Tracker</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#talking-i2c-and-a-base-for-uart-communication" class="nav-link">Talking I²C, and a base for UART communication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#compiling-the-lighthouse-fpga-project" class="nav-link">Compiling the lighthouse-fpga project</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-a-more-accessible-tracker-using-the-bitcraze-lighthouse-positioning-deck" class="nav-link">Creating a More Accessible Tracker Using the Bitcraze Lighthouse Positioning Deck</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="more-accessible-tracker">More Accessible Tracker</h1>
+<p>In which a bozo attempts to do SteamVR tracking for cheap.</p>
+<h2 id="talking-i2c-and-a-base-for-uart-communication">Talking I²C, and a base for UART communication</h2>
+<h3 id="2023-05-25">2023-05-25</h3>
+<p align="center">
+<img src="/blogs/mat/media/mat_hex_vomit.jpg" height="300">
+</p>
+
+<p>It's been a minute.</p>
+<p>I was busy with school and the rest of this MSD project, but I'm finished with all that now, and have decided to spend the rest of the summer working on this project, so hopefully there will be at least a few updates in the next few months.</p>
+<p>...is what I <em>would</em> have said on the 11th of May, if I hadn't had a bout of health issues over the last couple weeks. I'm back now, and working on the project again, and have some exciting updates:</p>
+<h4 id="i2c">I²C</h4>
+<p>The FPGA has two components: a bootloader, and firmware. This design makes the board "unbrickable," since you can always flash new firmware if you mess something up. Anyway, <a href="https://www.bitcraze.io/documentation/repository/lighthouse-bootloader/master/bootloader-protocol/">this page</a> details how that bootloader protocol works. Initially, I was trying to talk to it over UART 1 on the solder pads exposed, but that proved to be an exercise in futility. Instead, I shoved some jumper cables into the crazyflie expansion ports present on the deck, and set up I²C on an ESP32. I didn't bother regulating the voltage, and simply talk to it at 3.3V. To check if it worked, I tested the "Version" command, then I sent it the requisite boot commands, and he booted right up! The LEDs went from "Red and Blue" to "EVERYTHING!" There appear to be UART commands you can send to change those LEDs, but that's not really required for operation, since this thing is mostly stateless, and just vomits pulse data at you, I guess.</p>
+<h4 id="uart">UART</h4>
+<p>That's a nice little segue into the UART! Once the board is up, data spools in from UART0, once again located on those expansion pins. The protocol for that can be found documented in the <a href="https://github.com/bitcraze/lighthouse-fpga/blob/master/readme.md">lighthouse-fpga README</a>, and you can find code for that in the <a href="https://github.com/bitcraze/crazyflie-firmware/blob/7b218d49b447e013acc1b377a9c0b6bd17812ef3/src/modules/src/lighthouse/lighthouse_core.c#L232">Crazyflie firmware</a>.</p>
+<p>The thing about this system that didn't really occur to me until I got in touch with Bitcraze about this project is that everything important happens onboard the crazyflie. This means that a large part of what the Vive Trackers do hasn't been implemented, that is, use 2.4GHz RF to talk to the PC so that it can do all of the solving. This is good news and bad news: Good news, I won't have to port much of their STM32 code to the ESP32, I basically just have to get the data and shunt it somewhere. Bad news: I have implement the shunting. Luckily, this seems to be a solved problem. Products like the <a href="https://cdn.shopify.com/s/files/1/0560/9455/6369/files/TL448K6D-VR_Datasheet_v1p1.pdf?v=1624541321">Tundra Tracker SoC</a> have a Nordic nRF52832 RF processor that deals with communication to the PC by way of their dongle, or perhaps a watchman dongle? (I don't know if this product would work with a Watchman dongle, but I imagine the tech is very similar). So, either I can do something fancy with the ESP32 (it has onboard 2.4GHz radios of some kind, maybe I can use those?), or I can bring in some Nordic chip to do that for me. Small issue: Cost. My digikey parts list is already up to $60 on its own, and that sucks! So, I'd like to figure out how to do all this with as little hardware as possible.</p>
+<p>But I'm getting ahead of myself. That's the next problem. Right now, I'm just trying to correctly interpret data from the deck (specifically, today, I'm learning about the sync pulses), and prepare it for... whatever's next (probably sending to the PC). After that, I'll probably need an IMU.</p>
+<p>I wrote this post as an update, since it's been so long. As I said, I wanted to send something out sooner, but I got sick. Hopefully in the next week or three, I'll have another update, and can begin working on the IMU and/or communication issues.</p>
+<h4 id="code-please">Code, please?</h4>
+<p>Sure! It's literally garbage right now, but you can find my repo <a href="https://github.com/cleargauntlets/mat-hacking">here</a>. All it does is boot up the board and vomit whatever it gets back on UART.</p>
+<h2 id="compiling-the-lighthouse-fpga-project">Compiling the lighthouse-fpga project</h2>
+<h3 id="2023-03-07">2023-03-07</h3>
+<p>Hello again. I feel that this page is overdue for an update, so here's one: I've managed to compile the FPGA implementation! </p>
+<p>Specifically, <a href="https://github.com/bitcraze/lighthouse-fpga/">the bitcraze lighthouse-fpga repository</a>. It contains HLS code written in Scala along with a smattering of Verilog required to create a bitstream that can be loaded onto the Lattice ice40up5k FPGA. I'll leave the details about their implementation as an exercise to the reader (the README for that project is pretty in-depth).</p>
+<p>The part I was interested in was <a href="https://github.com/bitcraze/lighthouse-fpga#building-and-programming">here</a>. Before I went any further, I wanted to see if I could figure out the toolchain for this board to be sure that I knew how to make changes. Their instructions entail downloading, building, and installing a couple tools, so I followed this guide on a spare laptop I had to ensure that I wouldn't accidentally destroy my school laptop. But, when I typed <code>make</code>...</p>
+<pre><code class="language-BASH">ERROR: Unable to find legal placement for all cells, design is probably at utilisation limit.
+</code></pre>
+<p>Hm, well, there's instructions for generating a new timing seed in case you get timing errors, but no, this isn't a timing error. I believe this error was related to the design being too big to fit on the hardware. Describing an FPGA is out of scope for this blog (google it), but TL;DR, it's basically a chip with a whole bunch of LUTs that you can configure to act like any kind of logic circuit, as long as that circuit can translate to—and fit on—that array of LUTs. Around this point, I opened an <a href="https://github.com/bitcraze/lighthouse-fpga/issues/15">issue</a> to track my progress, and also to hopefully get someone's attention that their documentation doesn't Just Work.</p>
+<p>The first thing I tried was reverting back to the <a href="https://github.com/bitcraze/lighthouse-fpga/releases/tag/V6">most recent tag</a>. Maybe something was off about the design in the master branch, even though the CI was working, but surely this one would work?</p>
+<pre><code class="language-BASH">    ...
+Info: Annotating ports with timing budgets for target frequency 24.00 MHz
+Info: Checksum: 0x7d970e13
+
+Info: Device utilisation:
+Info:            ICESTORM_LC:  4959/ 5280    93%
+Info:           ICESTORM_RAM:    18/   30    60%
+Info:                  SB_IO:    14/   96    14%
+Info:                  SB_GB:     8/    8   100%
+Info:           ICESTORM_PLL:     1/    1   100%
+Info:            SB_WARMBOOT:     1/    1   100%
+Info:           ICESTORM_DSP:     0/    8     0%
+Info:         ICESTORM_HFOSC:     0/    1     0%
+Info:         ICESTORM_LFOSC:     0/    1     0%
+Info:                 SB_I2C:     0/    2     0%
+Info:                 SB_SPI:     0/    2     0%
+Info:                 IO_I3C:     0/    2     0%
+Info:            SB_LEDDA_IP:     0/    1     0%
+Info:            SB_RGBA_DRV:     0/    1     0%
+Info:         ICESTORM_SPRAM:     0/    4     0%
+
+Info: Placed 17 cells based on constraints.
+Info: Creating initial analytic placement for 4544 cells, random placement wirelen = 119963.
+Info:     at initial placer iter 0, wirelen = 1157
+Info:     at initial placer iter 1, wirelen = 1036
+Info:     at initial placer iter 2, wirelen = 1001
+Info:     at initial placer iter 3, wirelen = 1096
+Info: Running main analytical placer, max placement attempts per cell = 3126250.
+Info:     at iteration #1, type ALL: wirelen solved = 1011, spread = 33666, legal = 54569; time = 4.92s
+Info:     at iteration #2, type ALL: wirelen solved = 1872, spread = 25194, legal = 60314; time = 21.05s
+Info:     at iteration #3, type ALL: wirelen solved = 3028, spread = 21014, legal = 57499; time = 9.17s
+ERROR: Unable to find legal placement for all cells, design is probably at utilisation limit.
+10 warnings, 1 error
+make: *** [Makefile:20: lighthouse.asc] Error 255
+</code></pre>
+<p><strong>OK, why didn't that work?</strong> What's the <a href="https://github.com/bitcraze/lighthouse-fpga/actions/runs/3731419921/jobs/6329629141">CI</a> doing that I'm not?</p>
+<pre><code class="language-BASH">Run docker run --rm -v ${PWD}:/module bitcraze/fpga-builder ./tools/build/build
+Unable to find image 'bitcraze/fpga-builder:latest' locally
+latest: Pulling from bitcraze/fpga-builder
+</code></pre>
+<p>Oh, there's a docker container. That wasn't mentioned in the README.</p>
+<p><em>I would actually later find out that there's a utility they have called <a href="https://github.com/bitcraze/toolbelt">toolbelt</a> that I probably should have been using to build this.</em></p>
+<p>So, I pulled the docker container, and set up a copy of the repo I could pass in as a volume (since I wanted to keep the build artifacts). I also switched to Freedom, Computer Science House's gigantic 48-core compute server, in case I could speed up compilation more.</p>
+<pre><code class="language-BASH">podman run --rm -it \ 
+    -v /scratch/wilnil/lighthouse-fpga/:/module/workdir:Z \
+    --name bitcraze docker.io/bitcraze/fpga-builder
+</code></pre>
+<p>After that, I <code>cd</code>'ed into <code>/module/workdir</code>, ran <code>make</code>, and...</p>
+<pre><code>ERROR: Max frequency for clock          'Core_clk': 47.03 MHz (FAIL at 48.00 MHz)
+ERROR: Max frequency for clock 'Slow_clk_$glb_clk': 21.16 MHz (FAIL at 24.00 MHz)
+</code></pre>
+<p>OK! Progress! That's a timing error! This is expected :) So, now I have to run their <code>search_seed.py</code> just like the documentation says.</p>
+<p>Except, <code>search_seed.py</code> launched a Docker container. I don't have Docker, and I don't want Docker. However, I noticed that the V6 tag (I was still on master on Freedom) had an actual script, and not a Docker container. So I launched that on a single thread. The script, as far as I could tell, just tried to compile the design over and over again with a different seed, which, on a single core, would have taken <em>hours</em>. A quick tweak to the Python code, and I was doing 48 seeds at a time, which, on Freedom, took about 20 minutes to get through all 1000 seeds.</p>
+<p>After running through all 1000 seeds like 5 times, I had 3 seeds. None of them worked, though, and I don't really know why. Luckily, someone had <a href="https://github.com/bitcraze/lighthouse-fpga/issues/15#issuecomment-1455913534">replied to my issue</a> and told me to try reducing a multiplier that had been set really high as a precaution. There's a function in the Scala HLS that is part of the pulse processing process (lol) that had that had a speed multiplier set to 4 to deal with a worst case scenario that would never actually happen.</p>
+<p>So, I set that multiplier to 1, and...</p>
+<pre><code>Info: Max frequency for clock          'Core_clk': 51.58 MHz (PASS at 48.00 MHz)
+Info: Max frequency for clock 'Slow_clk_$glb_clk': 24.97 MHz (PASS at 24.00 MHz)
+
+Info: Max delay &lt;async&gt;                   -&gt; posedge Slow_clk_$glb_clk: 4.19 ns
+Info: Max delay posedge Core_clk          -&gt; posedge Slow_clk_$glb_clk: 5.47 ns
+Info: Max delay posedge Slow_clk_$glb_clk -&gt; &lt;async&gt;                  : 15.08 ns
+Info: Max delay posedge Slow_clk_$glb_clk -&gt; posedge Core_clk         : 17.20 ns
+
+Info: Slack histogram:
+Info:  legend: * represents 30 endpoint(s)
+Info:          + represents [1,30) endpoint(s)
+Info: [  1447,   3297) |+
+Info: [  3297,   5147) |+
+Info: [  5147,   6997) |*+
+Info: [  6997,   8847) |*******************+
+Info: [  8847,  10697) |****+
+Info: [ 10697,  12547) |***********+
+Info: [ 12547,  14397) |*********+
+Info: [ 14397,  16247) |*********+
+Info: [ 16247,  18097) |*************+
+Info: [ 18097,  19947) |**+
+Info: [ 19947,  21797) |***+
+Info: [ 21797,  23647) |*+
+Info: [ 23647,  25497) |*+
+Info: [ 25497,  27347) |*******+
+Info: [ 27347,  29197) |********+
+Info: [ 29197,  31047) |**********+
+Info: [ 31047,  32897) |**********+
+Info: [ 32897,  34747) |*****************+
+Info: [ 34747,  36597) |*********************************************************+
+Info: [ 36597,  38447) |************************************************************
+10 warnings, 0 errors
+
+Info: Program finished normally.
+python3 tools/update_bitstream_comment.py lighthouse.asc &quot;6&quot;
+icepack lighthouse.asc lighthouse.bin
+</code></pre>
+<p>It passed!</p>
+<p>It doesn't compile all the time, though, and I'm not really sure why. So, I'll have to read up some more on their toolchains and whatnot, and probably install Docker and do things <em>properly</em>.</p>
+<p>But, the next step in the More Accessible Tracker journey is talking to the board! So, stay tuned for that. I'll need to rig up a voltage divider, a serial connection, and solder to this $120 board :E</p>
+<h2 id="creating-a-more-accessible-tracker-using-the-bitcraze-lighthouse-positioning-deck">Creating a More Accessible Tracker Using the Bitcraze Lighthouse Positioning Deck</h2>
+<h3 id="2023-02-24">2023-02-24</h3>
+<h3 id="introduction">Introduction</h3>
+<p>When I began working on ClearGauntlets last year, it quickly became apparent that tracking was gonna be a bear of a project. For some reason, I figured that it was a solved problem. Somebody <em>must</em> have created a simple, easy-to-build device on the cheap to talk to Valve's cool lighthouses. And I was <em>very</em> wrong. This post will explain what I wanted to do, how wrong I was about how easy it would be to do so, and what my plan is going forward.</p>
+<p><strong>TL;DR: I've purchased a Bitcraze Lighthouse Positioning Deck and want to make my own Lighthouse 2.0 trackers because I am curious to see if I can.</strong></p>
+<h3 id="the-problem">The Problem</h3>
+<p>VR tracking is, actually, an insanely complicated challenge. One that took AAA engineers decades to figure out and create a consumer product that didn't <em>quite</em> cost $1000. During the later half of the 2010's, hackers gained some traction on reverse engineering Valve/HTC's Lighthouse tech. From those efforts came <a href="https://github.com/cntools/libsurvive">libsurvive</a>, an effort to fully unravel the stack, from the protocols that the lighthouses use to communicate with tracked devices, to the solving equations embedded in Valve's proprietary blobs. It's a truly incredible project that has been a huge inspiration to me on my short VR journey so far.</p>
+<p>However, these guys are focused on how to take Valve hardware and make it talk to their software. What I needed for the ClearGauntlets project was basically the opposite: Taking our hardware and getting it to talk to Valve software. ClearGauntlets is supposed to be a "More Premium™" Haptic Glove solution. Our target kit price is $200, all included. We're a fork of the LucidVR project, whose Prototype 4.1 glove is supposed to cost somewhere around $60. However, they don't include in that price things like the batteries and trackers. That project relies on you either finding a way to mount your controller to your hand, or dropping a few hundred on something like Vive Trackers. I didn't like that, so I wanted to find a way to incorporate tracking into our gloves.</p>
+<h3 id="research">Research</h3>
+<p>We didn't have a lot of options. Because I only had an original, 2016-vintage HTC Vive, knew very little about VR, and yet was somehow the resident expert on the team, I decided to target the SteamVR ecosystem. I figured that it would be easy enough, and we went about googling. In a few weeks, we had only found two "open source" solutions for DIY tracked devices: The <a href="https://hivetracker.github.io/">HiveTracker</a>, and the <a href="https://github.com/ashtuchkin/vive-diy-position-sensor">Vive DIY Position Sensor</a>. These looked like great options, until we realized that they were 7-ish years old. Not only that, but they only supported Lighthouse 1.0, and not the newer Lighthouse 2.0.</p>
+<p>Until we found these projects, I didn't really grasp the fact that there <em>were</em> two versions of Lighthouse tracking, <em>and</em> that if Lighthouse 1.0 was a Cessna prop plane, Lighthouse 2.0 was an F-18. 2.0 brought a slew of improvements and optimizations to SteamVR infrared tracking, and explaining the details and multitude of complications therein is out of scope here. What's important is that I very quickly realized that 2.0 tracking was <em>not</em> a solved problem for hackers, this entire problem is the kind of thing that people write about for their PhD thesis, and if someone was going to do it, it would be difficult and expensive.</p>
+<p>So we focused on Lighthouse 1.0 for now. It wasn't what we wanted, but we figured it would be good enough for the better-than-proof-of-concept gloves that we were trying to make. Lots of people—myself included—still had Lighthouse 1.0 gear, right?</p>
+<p>That was in October-ish. I kept reading. Eventually, sometime around December, I found the <a href="https://www.bitcraze.io/products/lighthouse-positioning-deck/">Bitcraze Lighthouse Positioning Deck</a>, a board sold by Bitcraze designed to enable their open-source drone platform to be tracked with Lighthouse 2.0 technology. This was.... what I was looking for. All their source code, schematics, documentation, <em>everything</em> is available on their website for free. The board even has solder points for serial connections. I thought, "What the hell!? How come someone hasn't hacked this thing already?" I asked around on the LucidVR Discord, and the primary reasons, of course, are cost, and engineering effort. This board is $90, plus tax, plus shipping, comes out to $120. For that, you could get a Vive tracker that's plug-and-play, no fuss. It doesn't make sense for your average hacker to buy a "development" board for the price of a market-ready product when they are trying to make a pair of haptic gloves or whatever.</p>
+<p>The whole time I was researching, I had been made aware through a friend of mine the SteamVR HDK. Essentially, back in the mid 2010's, Valve had created a suite of hardware devices and software tools to help people make SteamVR compatible tracked devices. This would be perfect for this project, if only they still sold them. I've had a pretty tough time tracking down info, but to my understanding, the project is pretty much dead, unfortunately. A lot of <a href="https://triadsemi.com/steamvr-tracking/">links on their page are dead or broken</a>. There is still a lot of info on the software on Steam's website and other places.</p>
+<p>Another project worth mentioning is <a href="https://tundra-labs.com/products/tl448k6d-vr-system-in-package-for-steamvr-tracking?variant=39421399859409">Tundra Labs' SIP</a>, but that has also been out of stock for months. Their datasheets do offer some nice inspiration.</p>
+<h3 id="a-long-road-ahead">A Long Road Ahead</h3>
+<p>I, however, am stupid. A fool, you might say. I hadn't yet realized that VR is actually <em>pretty expensive</em>. I wasn't ready to accept that my "all-included" gloves probably needed an extra $100 tacked on <em>at least</em> for an off-the-shelf tracking solution. However, I also realized that in order to take all of Bitcraze's IP and turn it from a drone product <em>back</em> into a SteamVR product would take a lot of time, effort, and money. So, I let the idea sit for a while.</p>
+<p>Until today. Today, my Bitcraze Lighthouse Positioning Deck arrived in the mail, all $120 of it. If you're on the <code>#tracking-solutions</code> channel on the LucidVR Discord, you'll probably have seen me raving about this project. I've decided that I need to take a step. I'm not really in this to <em>play VR games.</em> I'm in this because the tech is cool as hell. I've got this board, and I'm going to see if I can talk to it. Then, I'm going to see if I can program it. Then, I'm going to see if I can hack it. I'll be documenting my progress on this website. Probably on this page, so check back for regular updates.</p>
+<h3 id="the-plan">The Plan</h3>
+<p><img src="/media/bitcraze-in-hand.jpg" style="display: block; margin: 0 auto"/></p>
+<p>This will take months. It could take years. <strong>I don't want to give anybody the impression that I know what I am doing.</strong> I am an engineer by trade, yes, but I am <em>such</em> a noob to the entire VR space and tech stack. I have no idea why I'm even doing this other than, "It's neat." I can almost guarantee that this will crash and burn. I'll hit some roadblock that will mean this project is dead. This is probably the most difficult, most expensive thing I've ever done. But I'll give it a go, so that <em>Other People Don't Have To™</em>. At least then we'll know.</p>
+<p>Here's the plan:</p>
+<ol>
+<li>Get it set up with my lighthouses (V1.0), and get data out of it onto my computer in <em>literally any</em> capacity.</li>
+<li>Talk to it over serial. Set up toolchain, build + flash firmware.</li>
+<li>Get it talking to SteamVR.</li>
+<li>Start Hacking it. Add sensors, try making my own device. Design some PCBs, print some trackers, etc.</li>
+</ol>
+<p>What is the end goal, you might (and definitely should) ask? Well, I just think that SteamVR Trackers are Too Damn Expensive, and I think it would be Swell to have a single tracker cost $60. Now that I've seen how difficult this field is, I think that would be reasonable. That would still mean that my $200 pricepoint for ClearGauntlets would be tight, if not impossible, since that'd be $120 for tracking <em>alone</em> for a pair where we originally wanted to spend no more than $50, but $25 for a tracker is almost certainly a pipe dream, at least in 2023.</p>
+<p>In summary, I want to take Bitcraze's design and source code and turn it into a Vive Tracker That You Can Build At Home. Order the PCB, order the parts, print a case, solder it up, flash it, and you're off. A DIY tracker for $60 designed for <em>humans</em> (not drones) to wear. That price has to include the PCB, every component on the PCB, the battery, the chassis, and any additional mounting hardware you'd need.</p>
+<p><strong>Here's a list of everything off the top of my head that will be a <em>P R O B L E M:</em></strong></p>
+<ul>
+<li>The FPGA (and by extension Bitcraze's board) needs EXACTLY 3.0V. <strong>NOT 3.3V.</strong></li>
+<li>The FPGA only appears to have enough I/O for 12 TS4231's (the chip connected to the photodiode that gets pulses from the Lighthouse)</li>
+<li>Everything is REALLY SMALL. Seriously I ordered this board and have it in hand and MY GOD IT IS SO SMALL</li>
+<li>Chip shortage could completely ruin my life. I've checked DigiKey and Mouser, and they seem to have stuff in stock, but I haven't actually bought anything yet because I am a coward.</li>
+<li>Bitcraze's FPGA code is written in Scala<ul>
+<li>I don't know Scala</li>
+</ul>
+</li>
+<li>I haven't a clue how I'm actually going to get data off the board yet<ul>
+<li>Because the FPGA runs at a non-standard voltage, I'll probably need to order some kind of special cable to connect it to my PC.</li>
+<li>Secondly, the Lighthouse Positioning Deck does not have any kind of CPU onboard, only the FPGA, so I need a microcontroller and that'll probably be a lot of work.</li>
+</ul>
+</li>
+</ul>
+<p>But other than that, this seems pretty easy. I've got the board here on my desk, and I'm looking at it right now... and I just realized that I'm writing this blog post to delay working on solving all of the above problems. So... guess I'm gonna go do that.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

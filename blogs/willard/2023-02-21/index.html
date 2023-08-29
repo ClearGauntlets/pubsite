@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://cleargauntlets.github.io/blogs/willard/2023-02-21/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>2023 02 21 - ClearGauntlets</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link href="../../../css/extra.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">ClearGauntlets</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../docs/parts_list/" class="dropdown-item">Parts List</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/mechanical/" class="dropdown-item">Mechanical</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/electrical/" class="dropdown-item">Electrical</a>
+</li>
+                                    
+<li>
+    <a href="../../../docs/power/" class="dropdown-item">Power</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blogs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../mat/mat/" class="dropdown-item">More Accessible Tracker</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Willard</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="./" class="dropdown-item active">2023 02 21</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../photos/" class="nav-link">Photos</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../mat/mat/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../../photos/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#cleargauntlets-power-mismanagement" class="nav-link">ClearGauntlets Power (Mis)management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="cleargauntlets-power-mismanagement">ClearGauntlets Power (Mis)management</h2>
+<h3 id="2023-02-21">2023-02-21</h3>
+<h3 id="update-2023-05-02">Update: 2023-05-02</h3>
+<p><strong>There have been developments with the power module that make this information obsolete. The power module referenced here is still insufficient for our design. Refer to information in the "Projects" tab (not yet written) for advice on power systems.</strong></p>
+<p>Last week, Tucker finished building the ClearGauntlet 1.0, and handed it off to me to get it wired up and tested out before our demo. Having finished assembling <a href="https://github.com/ClearGauntlets/ClearGauntlet-PCB/releases/tag/Rev.B">Rev B</a> of our PCB, all that was left to do was solder short, three-pin IDE cables to each potentiometer, crimp Dupont connectors to the ends, and plug everything in.</p>
+<p>Unlike the previous semester's prototypes, this glove was "complete." It had five fingers, and five servos, instead of two. Initially, testing was done with the latest revision of the LucidVR firmware, 5V JST connector plugged into the wall (another teammate had the power module at the time), and serial port plugged into the PC. This setup appeared to be functional. All the fingers were responding, despite some issues with sticky reels and an overly-sensitive middle finger potentiometer.</p>
+<p>After spending some time tweaking the strength of the force feedback, the board was re-configured to work over Bluetooth. The serial cable was disconnected and the driver was configured for wireless operation, leaving just the 5V/2.3A wall wart to supply power. Problems crop up almost immediately.</p>
+<p>There were several hints as to what was wrong:</p>
+<ol>
+<li>When using the UI to extend or retract all servos, the first command would go through, and the servos would move a small amount, then die, and be unresponsive to further commands. Sometimes, the servos would get stuck jittering.</li>
+<li>In-game, finger tracking would work flawlessly, until grabbing something. The fingers would then freeze in place for a time, then start tracking again. The next time a hand is moved, the game would freeze while Visual Studio would break on a Read access violation.</li>
+<li>When firing all five servos at once (either by using the UI or moving towards an object in game) the status LED on the ESP32 would dim or flicker, indicating a brownout.</li>
+<li>All issues would vanish when 2-3 servos were disconnected from the board, reducing the momentary peak current of the glove.</li>
+</ol>
+<p>Aside from the power management issues, there were some tweaks that needed to be made to the Bluetooth communication code, graciously completed by <code>@danwillm#8254</code> on Discord. These mostly concerned issues with latency and connection bootstrapping.</p>
+<p>To solve the power management issues, testing was conducted with a variety of power delivery methods. It was concluded that a large, 5V/3A power source was required to keep the microcontroller fed during high power draw while the servos fired. Additionally, 2000µF electrolytic capacitors were added across the <code>Vin</code> and <code>3V3</code> pins of the ESP32, but this does not appear to have an appreciable effect on the survivability of the microcontroller. 100nF ceramic capacitors were also added across the power inputs of each servo.</p>
+<p><strong>Takeaways</strong></p>
+<ul>
+<li>ClearGauntlets requires at least a 5V/3A supply to power itself. Thus, a larger, two-cell version of the power module will be used from now on.</li>
+<li>Rev C of the ClearGauntlets board will require additional power circuitry such as load capacitors, and perhaps a separation of the power input for the ESP32.</li>
+</ul>
+<p><strong>Links</strong></p>
+<ul>
+<li><a href="https://discord.com/channels/784543299045818420/875815183447121991/883918618369343560">Twidge's description of capacitors</a></li>
+<li><a href="https://discord.com/channels/784543299045818420/1076936108836929606">"Brownouts" thread on LucidVR Discord</a></li>
+<li><a href="https://discord.com/channels/784543299045818420/1076312802093961266">"Bluetooth socket error" on LucidVR Discord</a></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
